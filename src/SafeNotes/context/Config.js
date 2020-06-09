@@ -14,30 +14,10 @@
  * limitations under the License.
  */
 
-import Axios from "axios";
+import React from "react";
 
-class StorageEngine {
-    static #ROUTE_NOTES = "/notes";
+// here we store default values that do not change across envs
+// IMPORTANT: first level vars will be overridden and NOT merged
+export const config = {};
 
-    client = "";
-
-    constructor(storagePath) {
-        this.client = Axios.create({
-            baseURL: storagePath,
-            timeout: 1000,
-            headers: {"X-App": "SafeNotes"},
-        });
-    }
-
-    store(params) {
-        return this.client.post(StorageEngine.#ROUTE_NOTES, {}, {
-            data: params,
-        });
-    }
-
-    fetch(path, params = {}) {
-        return this.client.get(StorageEngine.#ROUTE_NOTES + "/" + path, {...params});
-    }
-}
-
-export default StorageEngine;
+export const ConfigContext = React.createContext(config);

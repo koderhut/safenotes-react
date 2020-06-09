@@ -14,30 +14,27 @@
  * limitations under the License.
  */
 
-import Axios from "axios";
+import React from 'react';
+import PropType from 'prop-types';
 
-class StorageEngine {
-    static #ROUTE_NOTES = "/notes";
+const Footer = ({ classes, attrs, children }) => {
+  return (
+    <footer className={classes.join(' ')} {...attrs}>
+      {children}
+    </footer>
+  );
+};
 
-    client = "";
+Footer.propTypes = {
+  classes:  PropType.array,
+  attrs:    PropType.object,
+  children: PropType.any,
+};
 
-    constructor(storagePath) {
-        this.client = Axios.create({
-            baseURL: storagePath,
-            timeout: 1000,
-            headers: {"X-App": "SafeNotes"},
-        });
-    }
+Footer.defaultProps = {
+  classes:  [],
+  attrs:    {},
+  children: null,
+};
 
-    store(params) {
-        return this.client.post(StorageEngine.#ROUTE_NOTES, {}, {
-            data: params,
-        });
-    }
-
-    fetch(path, params = {}) {
-        return this.client.get(StorageEngine.#ROUTE_NOTES + "/" + path, {...params});
-    }
-}
-
-export default StorageEngine;
+export default Footer;

@@ -14,30 +14,15 @@
  * limitations under the License.
  */
 
-import Axios from "axios";
+import React from 'react';
 
-class StorageEngine {
-    static #ROUTE_NOTES = "/notes";
+const Quote = () => {
+  return (
+    <div className="text-center text-xl sm:text-2xl font-bold text-gray-500 md:w-10/12 lg:w-8/12 align-middle mx-auto capitalize my-4">
+      <p>Keep sensitive information safe</p>
+      <p className="text-sm sm:text-base">Use a secure sharing system</p>
+    </div>
+  );
+};
 
-    client = "";
-
-    constructor(storagePath) {
-        this.client = Axios.create({
-            baseURL: storagePath,
-            timeout: 1000,
-            headers: {"X-App": "SafeNotes"},
-        });
-    }
-
-    store(params) {
-        return this.client.post(StorageEngine.#ROUTE_NOTES, {}, {
-            data: params,
-        });
-    }
-
-    fetch(path, params = {}) {
-        return this.client.get(StorageEngine.#ROUTE_NOTES + "/" + path, {...params});
-    }
-}
-
-export default StorageEngine;
+export default Quote;

@@ -14,24 +14,33 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { useState } from 'react';
 
-import { config, ConfigContext } from './SafeNotes/context/Config';
-import StorageEngine from './lib/StorageEngine';
-import SafeNotes from './SafeNotes';
+const useFormControl = (initForm) => {
+  const [formObj, updateForm] = useState({ ...initForm });
 
-let AppConfig = {
-  ...config,
-  ...window.snenv,
-  storage: new StorageEngine(window.snenv.web.storage_path),
+  const onFormUpdate = (data) => {
+    updateForm({ ...formObj, [data.name]: data.value });
+  };
+
+  const resetForm = () => {
+    updateForm({ ...initForm });
+  };
+
+  const submit = (callback, event, reset = false) => {
+    event.preventDefault(); //always prevent page refresh
+
+    callback(formObj);
+
+    if (reset) resetForm();
+  }
+
+  return {
+    form:         formObj,
+    onUpdateForm: onFormUpdate,
+    resetForm:  resetForm,
+    submitForm: submit,
+  };
 };
 
-ReactDOM.render(
-  <React.StrictMode>
-    <ConfigContext.Provider value={AppConfig}>
-      <SafeNotes/>
-    </ConfigContext.Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+export default useFormControl;

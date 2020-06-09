@@ -14,30 +14,14 @@
  * limitations under the License.
  */
 
-import Axios from "axios";
+import React from "react";
 
-class StorageEngine {
-    static #ROUTE_NOTES = "/notes";
+const Loader = ({message}) => {
+    return (
+        <div
+            className="text-xl text-center border py-4 w-full sm:xw-8/12 md:w-10/12 lg:w-8/12 m-10 bg-white font-bold text-gray-500 mx-auto"
+        >{message}</div>
+    );
+};
 
-    client = "";
-
-    constructor(storagePath) {
-        this.client = Axios.create({
-            baseURL: storagePath,
-            timeout: 1000,
-            headers: {"X-App": "SafeNotes"},
-        });
-    }
-
-    store(params) {
-        return this.client.post(StorageEngine.#ROUTE_NOTES, {}, {
-            data: params,
-        });
-    }
-
-    fetch(path, params = {}) {
-        return this.client.get(StorageEngine.#ROUTE_NOTES + "/" + path, {...params});
-    }
-}
-
-export default StorageEngine;
+export default Loader;
