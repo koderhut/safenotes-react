@@ -4,7 +4,7 @@ A simple web app for sharing quick notes in a more secure manner.
 
 ## Tech stack
 - ReactJS for the web app
-- Go backend storage app: https://github.com/koderhut/memorynotes
+- Go backend storage app: https://github.com/koderhut/safenotes
 
 ## Project setup
 ```
